@@ -8,7 +8,7 @@ const validator = require("../utils/validation");
 const createCart = async function (req, res) {
     try {
         const requestBody = req.body;
-        var { items} = requestBody;
+        var { items } = requestBody;
         let userId = req.params.userId;
 
         // validation starts
@@ -67,7 +67,7 @@ const createCart = async function (req, res) {
 
                     let responseData = await cartModel.findOneAndUpdate({ _id: findCartData._id }, updatedCart, { new: true })
 
-                    return res.status(200).send({ status: true, message: `Product added successfully`, data: responseData })
+                    return res.status(200).send({ status: true, message: `Product added successfully.`, data: responseData })
                 }
             }
             itemsArr.push({ productId: productId, quantity: quantity }) //storing the updated prices and quantity to the newly created array.
@@ -75,14 +75,14 @@ const createCart = async function (req, res) {
             let updatedCart = { items: itemsArr, totalPrice:  findCartData.totalPrice + (items.quantity * findProductData.price), totalItems: itemsArr.length }
             let responseData = await cartModel.findOneAndUpdate({ _id: findCartData._id }, updatedCart, { new: true })
 
-            return res.status(200).send({ status: true, message: `Product added successfully`, data: responseData })
+            return res.status(200).send({ status: true, message: `Product added successfully..`, data: responseData })
         }
     } catch (err) {
         return res.status(500).send({ status: false, message: err.message });
     }
 };
 
-// -----------------------------------------------------Update cart--------------------------------------------------------
+// -----------------------------------------------------Update cart------------------------------------------------
 const updateCart = async function (req, res) {
     try {
         let requestBody = req.body;
@@ -113,9 +113,6 @@ const updateCart = async function (req, res) {
             return res.status(400).send({ status: false, message: "Invalid productId in body" })
         }
         let findProduct = await productModel.findOne({ _id: productId, isDeleted: false })
-        // if (!findProduct) {
-        //     return res.status(400).send({ status: false, message: "productId does not exists" })
-        // }
 
         //finding if products exits in cart
         let isProductinCart = await cartModel.findOne({ items: { $elemMatch: { productId: productId } } })
@@ -175,7 +172,7 @@ const updateCart = async function (req, res) {
 };
 
 
-// -------------------------------------------------Fetch cart----------------------------------------------------------
+// -------------------------------------------------Fetch cart-----------------------------------------------------
 //fetching cart details.
 const getCart = async function (req, res) {
     try {
@@ -196,7 +193,7 @@ const getCart = async function (req, res) {
     }
 };
 
-// ---------------------------------------------Delete cart----------------------------------------------------------
+// ---------------------------------------------Delete cart-------------------------------------------------------
 
 const deleteCart = async function (req, res) {
     try {

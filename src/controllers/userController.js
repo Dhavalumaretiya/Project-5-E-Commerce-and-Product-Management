@@ -4,7 +4,7 @@ const validator = require("../utils/validation")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//-------------------------------------Create User-----------------------------------------------------
+//-------------------------------------Create User-------------------------------------------------------
 
 const createUser = async function (req, res) {
     try {
@@ -157,7 +157,7 @@ const loginUser = async function (req, res) {
             {
                 userId: user._id.toString(),
                 iat: Math.floor(Date.now() / 1000),
-                exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60
+                exp: Math.floor(Date.now() / 1000) + 48 * 60 * 60
             },
             'project-5-Products_Management'
         )
@@ -237,7 +237,6 @@ const updateUser = async function (req, res) {
 
             let dupEmail = await userModel.findOne({ email: email });
             if (dupEmail) return res.status(400).send({ status: false, message: "email is already registered" });
-
         }
 
         //validation of phone
@@ -292,9 +291,7 @@ const updateUser = async function (req, res) {
                     var billingPincode = address.billing.pincode;
                 }
             }
-
         }
-
         //upload profile image to s3 and get the uploaded link
 
         let files = req.files      // whatever the key is , doesnt matter
